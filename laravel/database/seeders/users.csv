@@ -1,0 +1,22 @@
+id,username,password,role,division name
+1,payment_1,payment_1,user,Payment
+2,payment_2,payment_2,user,Payment
+3,payment_3,payment_3,user,Payment
+4,payment_4,payment_4,user,Payment
+5,payment_5,payment_5,user,Payment
+6,procurement_1,procurement_1,user,Procurement
+7,procurement_2,procurement_2,user,Procurement
+8,procurement_3,procurement_3,user,Procurement
+9,it_1,it_1,user,IT
+10,it_2,it_2,user,IT
+11,it_3,it_3,user,IT
+12,it_4,it_4,user,IT
+13,it_5,it_5,user,IT
+14,it_6,it_6,user,IT
+15,it_7,it_7,user,IT
+16,finance_1,finance_1,user,Finance
+17,finance_2,finance_2,user,Finance
+18,finance_3,finance_3,user,Finance
+19,hr_1,hr_1,admin,HR
+20,hr_2,hr_2,admin,HR
+21,hr_3,hr_3,admin,HR
