@@ -9,7 +9,7 @@
     <ResetPassword v-if="authData.resetPass" @resetPass="getResetPassData" />
     <!-- <button type="button" @click="reset">RESET PASS</button> -->
     <div v-else>
-      <Home @logout="logout" />
+      <Home @logout="logout" :user="this.authData.user.username" />
     </div>
   </section>
 </template>
@@ -22,14 +22,15 @@ import Home from "@/components/Home";
 
 import axios from "axios";
 
+var url = "http://localhost:8000/api";
 export default {
   name: "App",
   data() {
     return {
       authData: {
         loggedIn: localStorage.token,
-        user: localStorage.username,
-        resetPass: true,
+        user: {},
+        resetPass: false,
       },
     };
   },
@@ -38,22 +39,31 @@ export default {
       const token = `Bearer ${data.token}`;
       localStorage.setItem("token", token);
       this.authData.loggedIn = localStorage.token;
+      // this.authData.resetPass = true;
+    },
+
+    me() {
+      axios.defaults.headers.common["Authorization"] = `${localStorage.token}`;
+      axios.post(`${url}/auth/me`).then((res) => {
+        this.authData.user = res.data;
+      });
     },
 
     getResetPassData() {
       localStorage.clear();
       this.authData.loggedIn = localStorage.token;
-      this.authData.resetPass = false;
-    },
-
-    me(data) {
-      console.log(data);
+      this.authData.resetPass = true;
     },
 
     logout() {
       localStorage.clear();
       this.authData.loggedIn = localStorage.token;
     },
+  },
+  mounted() {
+    if (localStorage.token) {
+      this.me();
+    }
   },
   components: {
     Login,

@@ -45,7 +45,7 @@ class AuthController extends Controller
         return response()->json(['message' => 'succesfully logged out'], Response::HTTP_OK);
     }
 
-    public function me(Request $request)
+    public function me()
     {
         return response()->json(auth()->user());
     }

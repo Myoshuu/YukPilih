@@ -43,7 +43,6 @@ export default {
         username: "",
         password: "",
       },
-      token: "",
     };
   },
   methods: {
@@ -52,14 +51,7 @@ export default {
         .post(`${url}/auth/login`, loginData)
         .then((res) => {
           this.$emit("logIn", res.data);
-
-          axios
-            .post(`${url}/auth/me`, loginData, {
-              headers: { Authorization: localStorage.token },
-            })
-            .then((res) => {
-              localStorage.setItem("username", res.data.username);
-            });
+          this.$emit("me");
         })
         .catch((err) => {
           alert(err.response.data.message);
