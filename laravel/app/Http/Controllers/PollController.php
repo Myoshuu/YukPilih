@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Choice;
 use App\Models\Poll;
-use App\Models\User;
 use App\Models\Vote;
 use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Facades\Validator;
 
 class PollController extends Controller
@@ -47,7 +45,7 @@ class PollController extends Controller
         $polls->title = $request->title;
         $polls->description = $request->description;
         $polls->datetime = $date;
-        $polls->created_by = auth()->user()->id;
+        $polls->created_by = auth()->user()->username;
         $polls->save();
 
         $polls_id = $polls->id;
@@ -81,8 +79,6 @@ class PollController extends Controller
             'poll_id' => $poll->id
         ])->get();
 
-
-
         if (($user->role == 'admin' && $poll->user_id == $user->id) || $poll->deadline <= $today || isset($vote->id)) {
             return response()->json(['poll' => $poll, 'creator' => $user->username], Response::HTTP_OK);
         }
@@ -104,10 +100,12 @@ class PollController extends Controller
 
         $arr = [];
 
-        if ($user->role == 'admin') {
+        if ($user->role === 'admin') {
             $arr = $polls;
-            return response()->json(compact('arr'));
-        } else {
+            return response()->json($arr);
+        }
+
+        if ($user->role === 'user') {
             foreach ($polls as $poll) {
                 $vote = Vote::where([
                     'user_id' => $user->id,
@@ -115,7 +113,7 @@ class PollController extends Controller
                 ])->get();
 
                 $arr = $vote;
-                return response()->json(compact('arr'));
+                return response()->json($arr);
             }
         }
     }
@@ -140,6 +138,9 @@ class PollController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $poll = Poll::findOrFail($id);
+        $poll->delete();
+
+        return response()->json(['message' => 'poll deleted'], 200);
     }
 }

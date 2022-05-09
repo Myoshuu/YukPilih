@@ -49,6 +49,7 @@ Route::group([
     Route::post('/', [PollController::class, 'store']);
     Route::get('/', [PollController::class, 'showAll']);
     Route::get('/{poll_id}', [PollController::class, 'show']);
+    Route::delete('/{poll_id}', [PollController::class, 'destroy']);
 
     // Vote
     // Route::post('/{poll_id}/vote/{choice_id}', [VoteController::class, 'vote']);

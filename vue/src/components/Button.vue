@@ -1,6 +1,6 @@
 <template>
   <div class="container-btn">
-    <button type="submit" class="btn">{{ label }}</button>
+    <button :type="type" class="btn">{{ label }}</button>
   </div>
 </template>
 
@@ -9,6 +9,7 @@ export default {
   name: "Button",
   props: {
     label: String,
+    type: String,
   },
 };
 </script>
@@ -24,7 +25,6 @@ export default {
 button {
   /* Font */
   font-family: "Poppins";
-
   padding: 10px 15px;
   background: #3f51b5;
   color: white;

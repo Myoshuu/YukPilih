@@ -1,62 +1,34 @@
 <template>
   <div class="container-login">
-    <form @submit.prevent="formDataLogin(loginData)" method="post">
+    <form method="post">
       <div class="form-control">
-        <input
-          type="text"
-          id="username"
-          name="username"
-          placeholder=" "
-          v-model="loginData.username"
-        />
+        <input type="text" id="username" name="username" placeholder=" " />
         <label for="username">Username</label>
       </div>
       <div class="form-control">
-        <input
-          type="password"
-          id="password"
-          name="password"
-          placeholder=" "
-          v-model="loginData.password"
-        />
+        <input type="password" id="password" name="password" placeholder=" " />
         <label for="password">Password</label>
       </div>
-      <Button label="Login" />
+      <Button type="submit" label="Login" />
     </form>
   </div>
 </template>
 
 <script>
-// Axios
-import axios from "axios";
-
-// Component
-import Button from "@/components/Button";
-
-var url = "http://localhost:8000/api";
+import Button from "@/components/Button.vue";
 
 export default {
-  name: "Login",
-  data() {
+  name: "LoginView",
+  data(){
     return {
       loginData: {
-        username: "",
-        password: "",
+        username: '',
+        password: ''
       },
-    };
+    }
   },
   methods: {
-    formDataLogin(loginData) {
-      axios
-        .post(`${url}/auth/login`, loginData)
-        .then((res) => {
-          this.$emit("logIn", res.data);
-          this.$emit("me");
-        })
-        .catch((err) => {
-          alert(err.response.data.message);
-        });
-    },
+    // 
   },
   components: {
     Button,
@@ -65,7 +37,7 @@ export default {
 </script>
 
 <style scoped>
-div.container-login {
+.container-login {
   height: 100vh;
   display: flex;
   justify-content: center;
